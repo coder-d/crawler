@@ -1,2 +1,13 @@
 /vendor/*
 /Tests/env/local/
+DatabaseConfig.php
+SiteSettings.php
+TestDatabaseConfig.php
+/.idea/
+composer.lock
+.phpunit.result.cache
+sitemap.html
+# macOS system files
+.DS_Store
+.AppleDouble/
+.AppleDesktop/
