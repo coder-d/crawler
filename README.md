@@ -1,22 +1,23 @@
-Crawler
-A simplified PHP Web Crawler application featuring hard-coded login logic. The project employs MVC and Repository design patterns and includes test cases.
+# Crawler 
 
----Table of Contents
----Installation
----Database Setup
----Configuration
----Design Patterns
----Test Cases
----Git Ignore
----Miscellaneous
+A simplified PHP Web Crawler application featuring hard-coded login logic. The project employs MVC and Observer design patterns and includes test cases.
 
-Installation
---Clone the repository to your local machine.
---Navigate to the project directory.
---Run composer install to install all required packages.
+## Table of Contents
+1. [Installation](#installation)
+2. [Database Setup](#database-setup)
+3. [Configuration](#configuration)
+4. [Design Patterns](#design-patterns)
+5. [Test Cases](#test-cases)
+6. [Git Ignore](#git-ignore)
+7. [Miscellaneous](#miscellaneous)
 
-Database Setup
-For Development
+## Installation
+
+- Clone the repository to your local machine.
+- Navigate to the project directory.
+- Run `composer install` to install all required package
+
+## For Development
 --Run the following SQL script to set up the crawler database:
 	
 	CREATE DATABASE crawler;
@@ -30,7 +31,7 @@ For Development
 	);
 
 
-For Testing
+## For Testing
 --Run the following SQL script to set up the crawler_test database:
 	
 	CREATE DATABASE crawler_test;
@@ -44,7 +45,7 @@ For Testing
 	);
 
 
-Configuration
+## Configuration
 --Rename DatabaseConfig.php.env to DatabaseConfig.php, SiteSettings.php.env to SiteSettings.php and TestDatabaseConfig.php.env to TestDatabaseConfig.php
 --Update DatabaseConfig.php and SiteSettings.php with your actual settings.
 --Update TestDatabaseConfig.php with your test database settings.
@@ -62,7 +63,7 @@ The application uses the Model-View-Controller (MVC) pattern to manage the codeb
 The Observer Pattern is implemented to provide a more flexible and extendable architecture. This pattern allows us to define a one-to-many dependency between objects so that when one object changes state, all its dependents are notified and updated automatically. In our project, this is particularly useful for updating the database once a web crawl is complete. This ensures efficient use of resources and makes it easier to add more features or triggers that respond to crawl events in the future.
 
 
-Test Cases
+## Test Cases
 To run the test cases:
 
 Navigate to the project directory.
@@ -71,6 +72,6 @@ Note for Test Cases
 If your web server and CLI have different localhost settings, set the BASE_URL dynamically in the CLI before running PHPUnit tests:
 export BASE_URL=http://your.cli.localhost/
 
-Miscellaneous
+## Miscellaneous
 The login logic is hard-coded for simplification.
 Manual updates to DatabaseConfig.php and TestDatabaseConfig.php are necessary
