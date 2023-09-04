@@ -17,21 +17,29 @@ class Database
     /**
      * @var PDO|null Database connection
      */
-    private ?PDO $conn = null;
+    private static ?PDO $conn = null;
 
     /**
-     * Connect to the database.
+     * Get the database connection instance.
      *
      * @return PDO The PDO instance representing the database connection.
      */
-    public function connect(): PDO
+    public static function getInstance(): PDO
     {
-        try {
-            $this->conn = new PDO(DatabaseConfig::DB_DSN, DatabaseConfig::DB_USER, DatabaseConfig::DB_PASS);
-            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            return $this->conn;
-        } catch (PDOException $e) {
-            die("Connection failed: " . $e->getMessage());
+        if (self::$conn === null) {
+            try {
+                self::$conn = new PDO(DatabaseConfig::DB_DSN, DatabaseConfig::DB_USER, DatabaseConfig::DB_PASS);
+                self::$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            } catch (PDOException $e) {
+                die("Connection failed: " . $e->getMessage());
+            }
         }
+
+        return self::$conn;
     }
+
+    // Prevent instantiation and cloning.
+    private function __construct() {}
+    private function __clone() {}
+    public function __wakeup() {}
 }

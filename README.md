@@ -6,10 +6,11 @@ A simplified PHP Web Crawler application featuring hard-coded login logic. The p
 1. [Installation](#installation)
 2. [Database Setup](#database-setup)
 3. [Configuration](#configuration)
-4. [Design Patterns](#design-patterns)
-5. [Test Cases](#test-cases)
-6. [Git Ignore](#git-ignore)
-7. [Miscellaneous](#miscellaneous)
+4. [Script User and Cron Job](#script-user-and-cron-job)
+5. [Design Patterns](#design-patterns)
+6. [Test Cases](#test-cases)
+7. [Git Ignore](#git-ignore)
+8. [Miscellaneous](#miscellaneous)
 
 ## Installation
 
@@ -55,6 +56,12 @@ Home Page: http://localhost/sub_dir/views/public/homepage
 Login Page: http://localhost/sub_dir/views/login
 Admin Dashboard: http://localhost/sub_dir/views/admin/dashboard
 
+## Script User and Cron Job
+Add the script user in the  getWebUser function to SiteSettings.php 
+
+To avoid the "Operation not permitted" error for the cron job, make sure to give crontab access to the script user by running the following command:
+sudo chmod u+s /usr/sbin/crontab
+
 Design Patterns
 ## MVC
 The application uses the Model-View-Controller (MVC) pattern to manage the codebase effectively.
@@ -75,3 +82,4 @@ export BASE_URL=http://your.cli.localhost/
 ## Miscellaneous
 The login logic is hard-coded for simplification.
 Manual updates to DatabaseConfig.php and TestDatabaseConfig.php are necessary
+Please note that the current setup is designed for simplicity and is not the best solution for production. For production systems, consider using a more robust job queue like Gearman or Laravel worker.

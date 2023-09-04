@@ -70,7 +70,7 @@ class CrawlManager implements SubjectInterface
      * @return void
      */
     public function addObserver(ObserverInterface $observer): void
-    {
+    {   
         $this->observers[] = $observer;
     }
 
@@ -95,7 +95,7 @@ class CrawlManager implements SubjectInterface
      * @return void
      */
     public function notifyObservers($eventData): void
-    {
+    {   
         foreach ($this->observers as $observer) {
             $observer->update($eventData);
         }

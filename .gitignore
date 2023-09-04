@@ -7,6 +7,8 @@ TestDatabaseConfig.php
 composer.lock
 .phpunit.result.cache
 sitemap.html
+runCrawl.sh
+saved_page.html
 # macOS system files
 .DS_Store
 .AppleDouble/

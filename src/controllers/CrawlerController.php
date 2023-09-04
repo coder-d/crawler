@@ -6,22 +6,45 @@ use App\Models\CrawlerModel;
 use App\Services\CrawlerService;
 use App\Core\Observers\CrawlManager;
 use App\Core\Observers\ResultDeletionObserver;
+use App\Core\Observers\CronJobObserver;
+use App\Core\Observers\SavePageObserver;
 use App\Core\SiteSettings;
 
+/**
+ * CrawlerController Class
+ *
+ * This class is responsible for handling web crawling operations.
+ * It utilizes observer design pattern for extensibility and modularity.
+ */
 class CrawlerController
 {
-    private CrawlerModel $model;
-    private CrawlerService $service;
-    private CrawlManager $crawlManager;
-    private SiteSettings $siteSettings;
+    /**
+     * @var CrawlerModel
+     */
+    private $model;
 
     /**
-     * Constructor to initialize dependencies.
+     * @var CrawlerService
+     */
+    private $service;
+
+    /**
+     * @var CrawlManager
+     */
+    private $crawlManager;
+
+    /**
+     * @var SiteSettings
+     */
+    private $siteSettings;
+
+    /**
+     * CrawlerController constructor
      *
-     * @param CrawlerModel  $model        Crawler model object.
-     * @param CrawlerService $service     Crawler service object.
-     * @param CrawlManager  $crawlManager Crawler manager object.
-     * @param SiteSettings  $siteSettings Site settings object.
+     * @param CrawlerModel $model
+     * @param CrawlerService $service
+     * @param CrawlManager $crawlManager
+     * @param SiteSettings $siteSettings
      */
     public function __construct(
         CrawlerModel $model,
@@ -34,12 +57,14 @@ class CrawlerController
         $this->crawlManager = $crawlManager;
         $this->siteSettings = $siteSettings;
 
-        // Adding observers to the crawl manager
-        $this->crawlManager->addObserver(new ResultDeletionObserver($this->model));
+        // Register the observers
+        $this->crawlManager->addObserver(new ResultDeletionObserver());
+        $this->crawlManager->addObserver(new CronJobObserver(__DIR__ . '/../../scripts', $this->siteSettings));
+        $this->crawlManager->addObserver(new SavePageObserver($this->siteSettings));
     }
 
     /**
-     * Crawls the homepage and echoes the number of links extracted.
+     * Initiates a crawl operation for the homepage and outputs the count of extracted links
      *
      * @return void
      */
@@ -51,9 +76,9 @@ class CrawlerController
     }
 
     /**
-     * Triggers the crawling process.
+     * Triggers the crawl operation by delegating to CrawlManager
      *
-     * @return array The array of links crawled.
+     * @return array
      */
     public function triggerCrawl(): array
     {
@@ -61,13 +86,12 @@ class CrawlerController
     }
 
     /**
-     * Displays the results of the crawl operation.
+     * Fetches the results of the crawling operation from the database
      *
-     * @return array The array of links that were crawled.
+     * @return array
      */
     public function displayResults(): array
     {
-        $links = $this->model->fetchLinks();
-        return $links;
+        return $this->model->fetchLinks();
     }
 }
